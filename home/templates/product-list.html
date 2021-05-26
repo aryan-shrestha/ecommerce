@@ -148,7 +148,10 @@
                                     </div>
                                     <div class="product-image">
                                         <a href="product-detail.html">
+                                            {% if hot.image.url %}
                                             <img src="{{hot.image.url}}" alt="Product Image" height="400px" width="200px">
+                                            {% else %}
+                                            <img src="{% static './img/placeholder.jpg' %}" alt="Product Image" height="400px" width="200px">
                                         </a>
                                         <div class="product-action">
                                             <a href="#"><i class="fa fa-cart-plus"></i></a>
