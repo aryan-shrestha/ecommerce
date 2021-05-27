@@ -227,8 +227,8 @@
                                     <img src="{{hot.image.url}}" alt="Product Image" height="300px" width="300px">
                                 </a>
                                 <div class="product-action">
-                                    <a href="{% url 'cart:add_to_cart' hot.slug %}"><i class="fa fa-cart-plus"></i></a>
-                                    <a href="{% url 'cart:add_to_wishlist' hot.slug %}"><i class="fa fa-heart"></i></a>
+                                    <a class="btn cartBtn" data-productslug={{hot.slug}} data-action="add-to-cart"><i class="fa fa-cart-plus "></i></a>
+                                    <a><i class="fa fa-heart"></i></a>
                                     <a href="#"><i class="fa fa-search"></i></a>
                                 </div>
                             </div>
@@ -238,7 +238,7 @@
                                 {% else %}
                                 <h3><span>$</span>{{hot.price}}</h3>
                                 {% endif%}
-                                <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                                <button class="btn cartBtn" data-productslug={{hot.slug}} data-action="add-to-cart"><i class="fa fa-shopping-cart"></i>Buy Now</button>
                             </div>
                         </div>
                     </div>

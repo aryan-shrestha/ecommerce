@@ -2,6 +2,8 @@ from django.shortcuts import render, HttpResponseRedirect, reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail, EmailMessage
+from django.http import JsonResponse
+import json
 
 from home.models import Item
 from .models import Cart, Wishlist, Contact
@@ -11,7 +13,10 @@ from home.views import BaseView
 # Create your views here.
 
 @login_required(login_url='home:login')
-def add_to_cart(request, slug):
+def addToCart(request):
+    data = json.loads(request.body)
+    slug = data['productSlug']
+
     username = request.user.username
     price = Item.objects.get(slug=slug).price
     discounted_price = Item.objects.get(slug=slug).discounted_price
@@ -29,7 +34,7 @@ def add_to_cart(request, slug):
         if Wishlist.objects.filter(username=username, slug=slug).exists():
             Wishlist.objects.filter(username=username, slug=slug).delete()
 
-        return HttpResponseRedirect(reverse('cart:my_cart'))
+        return JsonResponse("Item was added", safe=False)
 
     else:
         quantity = 1
@@ -48,8 +53,7 @@ def add_to_cart(request, slug):
         Wishlist.objects.filter(username=username, slug=slug).delete()
     messages.success(request, f'{data.items.name}  added in cart!!')
 
-    return HttpResponseRedirect(reverse('cart:my_cart'))
-
+    return JsonResponse("Item was added", safe=False)
 
 class CartView(BaseView):
     def get(self, request):
